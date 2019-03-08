@@ -1,0 +1,324 @@
+a{
+	color: #00438a;
+}
+fieldset{
+	border: 0;
+	text-align: left;
+}
+fieldset label{
+	display: inline-block;
+	width: 35%;
+	text-align: right;
+	font-size: 12px;
+}
+.oneThirdFieldset{
+	display: inline-block;
+	width: 30%;
+}
+.oneThirdFieldset label{
+	width: 65px;
+}
+.oneThirdFieldset input{
+	display: inline-block;
+	width: 120px;
+}
+.quarterFieldset{
+	display: inline-block;
+	width: 21%;
+}
+.quarterFieldset label{
+	width: 65px;
+}
+.quarterFieldset input{
+	display: inline-block;
+	width: 80px;
+}
+.halfFieldset{
+	display: inline-block;
+	width: 45%;
+}
+.halfFieldset label{
+	width: 65px;
+}
+.halfFieldset input{
+	display: inline-block;
+	width: 120px;
+}
+
+#toolbar fieldset{
+	display: inline-block;
+	width: 270px;
+	border: 0;
+	text-align: left;
+}
+#toolbar fieldset label{
+	display: block;
+	width: 110px;
+	text-align: right;
+	font-size: 12px;
+	float: left;
+	clear: left;
+	position: relative;
+	padding: 3px;
+}
+#toolbar fieldset input{
+	position: relative;
+	margin-left: 30px;
+	display: block;
+	width: 150px;
+}
+#toolbar fieldset select{
+	position: relative;
+	margin-left: 30px;
+	display: block;
+	width: 150px;
+}
+
+#knowledgetoolbar fieldset{
+	display: inline-block;
+	width: 270px;
+	border: 0;
+	text-align: left;
+}
+#knowledgetoolbar fieldset label{
+	display: block;
+	width: 100px;
+	text-align: right;
+	font-size: 12px;
+	float: left;
+	clear: left;
+	position: relative;
+	padding: 3px;
+}
+#knowledgetoolbar fieldset input{
+	position: relative;
+	margin-left: 105px;
+	display: block;
+	width: 150px;
+}
+
+.buttonbar{
+	margin: 5px 0 10px 10px;
+}
+
+.datagrid-row-selected a {
+	color: #000;
+}
+
+.tableList{
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.div_ul {
+	margin: 0 auto;
+	width: 450px;
+	font: 13px arial;
+}
+
+.div_ul ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.div_ul ul li {
+	padding: 3px 0 3px 50px;
+	border-bottom: dotted 1px #666;
+}
+
+.div_ul ul li label {
+	display: block;
+	width: 100px;
+	float: left;
+	font-size: 14px;
+}
+
+.div_ul ul li textarea,.div_ul ul li .setinput {
+	resize: none;
+	width: 400px;
+	height:80px;
+	font-size: 13px;
+	font-family: Arial;
+}
+
+.div_ul ul li img.ShowImg {
+	margin-left: 160px;
+}
+
+
+#titlefont{
+	font-size:large;
+	font-weight: bold;
+	
+}
+
+.alldialog{
+	padding: 5px;
+	width:500px !important;
+	height:300px !important;
+}
+
+.uploadDialog{
+	padding: 5px;
+	width:350px !important;
+	height:120px !important;
+	text-align: center;
+}
+
+.passengerDialog{
+	position: relative;
+	padding: 5px;
+	width:350px !important;
+	height:150px !important;
+}
+.passengerDialog span{
+	margin-top: 20px;
+}
+.passengerDialog .title{
+	display: inline-block;
+	width: 30%;
+	text-align: right;
+}
+.passengerDialog .content{
+	display: inline-block;
+	width: 70%;
+}
+
+.payDialog{
+	position: relative;
+	padding: 5px;
+	width:350px !important;
+	height:450px !important;
+}
+.payDialog span{
+	margin-top: 20px;
+}
+.payDialog .title{
+	display: inline-block;
+	width: 30%;
+	text-align: right;
+}
+.payDialog .content{
+	display: inline-block;
+	width: 70%;
+}
+
+.feedbackInfo{
+	overflow-y: scroll;
+}
+
+.feedbackInfo span{
+	margin-top: 20px;
+}
+.feedbackInfo .title{
+	display: inline-block;
+	width: 15%;
+	text-align: right;
+}
+.feedbackInfo .content{
+	display: inline-block;
+	width: 80%;
+}
+
+.feedbackAdd .title{
+	display: inline-block;
+	width: 15%;
+	text-align: right;
+}
+.feedbackAdd .content{
+	display: inline-block;
+	width: 80%;
+}
+
+.orderDialog{
+	position: relative;
+	padding: 5px;
+	width:1040px !important;
+	height:550px !important;
+	overflow-x: hidden !important; 
+}
+.orderDialog .datagrid .panel-body {
+	margin-bottom: 0px;
+}
+
+.smsDialog{
+	position: relative;
+	padding: 5px;
+	width:400px !important;
+	height:320px !important;
+	overflow-x: hidden !important; 
+}
+.smsDialog .datagrid .panel-body {
+	margin-bottom: 0px;
+}
+.smsDialog fieldset{
+	display: block;
+	width: 100%;
+	border: 0;
+	text-align: left;
+}
+.smsDialog fieldset input{
+	margin-left: 5%;
+	margin-top: 10px;
+}
+.smsDialog fieldset textarea{
+	width: 85%;
+	margin-left: 5%;
+	margin-top: 10px;
+	height: 100px;
+	resize: none;
+}
+
+.refundDialog{
+	position: relative;
+	padding: 5px;
+	width:800px !important;
+	height:380px !important;
+	overflow-x: hidden !important; 
+}
+.refundDialog .datagrid .panel-body {
+	margin-bottom: 0px;
+}
+
+.dialog-button{
+	text-align: center;
+}
+
+.green{
+	color: green;
+}
+.green:hover{
+	color: green;
+}
+
+.div_inlineBlock{
+	display:inline-block;
+}
+.div_grid{
+	position: absolute;
+	width:100%;
+	overflow-x: hidden;
+}
+
+#addReset{
+	display: none;
+}
+
+.hidden{
+	display: none;
+}
+.refundProcessing{
+	position: relative;
+	padding: 5px;
+	width:800px !important;
+	height:55px !important;
+	overflow-x: hidden !important; 
+}
+.danxuan{
+	display: inline-block !important;
+	width:30px !important;
+	margin-left: 0 !important;
+}

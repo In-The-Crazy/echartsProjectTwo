@@ -1,0 +1,26 @@
+package $SVBean.getISVPackageName();
+
+import java.util.List;
+import java.util.Map;
+import com.huicheng.hcframe.exception.AppException;
+import com.huicheng.hcframe.service.ICommonSV;
+import $SVBean.getBeanFullClassName().${SVBean.beanName}Bean;
+
+public interface $SVBean.getISVName() {
+	public ICommonSV getCurrentDSCommonSV()throws AppException;
+	public  java.sql.Timestamp getSysDate()throws AppException;
+	public void add${SVBean.beanName}(${SVBean.beanName}Bean ${SVBean.lowerCasebeanName}Bean)throws AppException;
+	public void add${SVBean.beanName}s(${SVBean.beanName}Bean[] ${SVBean.lowerCasebeanName}Beans)throws AppException;
+	public void update${SVBean.beanName}(${SVBean.beanName}Bean ${SVBean.lowerCasebeanName}Bean)throws AppException;
+	public void update${SVBean.beanName}s(${SVBean.beanName}Bean[] ${SVBean.lowerCasebeanName}Beans)throws AppException;
+	public void delete${SVBean.beanName}(${SVBean.beanName}Bean ${SVBean.lowerCasebeanName}Bean)throws AppException;
+	public void delete${SVBean.beanName}s(${SVBean.beanName}Bean[] ${SVBean.lowerCasebeanName}Beans)throws AppException;
+	public String getNew${SVBean.UpperCaseKeyName}() throws AppException;
+	
+	public int get${SVBean.beanName}sCount( String condition,Map paramMap)throws AppException;
+	public List<${SVBean.beanName}Bean> get${SVBean.beanName}s( String cols,String condition,Map paramMap,int startIndex,int endIndex)throws AppException;
+	public int get${SVBean.beanName}sBySqlCount( String sql,Map paramMap)throws AppException;
+	public List<${SVBean.beanName}Bean> get${SVBean.beanName}sBySql( String cols,String sql,Map paramMap,int startIndex,int endIndex)throws AppException;
+	public ${SVBean.beanName}Bean get${SVBean.beanName}(String ${SVBean.LowerCaseKeyName})throws AppException;
+	
+}

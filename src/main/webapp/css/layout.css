@@ -1,0 +1,26 @@
+body{
+	margin:0;
+	padding: 0;
+}
+#north{
+	background-image: url("../images/bg_top.jpg") ;
+	overflow: hidden;
+	height: 58px;
+	border:0;
+}
+#west{
+	width:180px;
+	background:#efefef;
+}
+#center{
+	background:#efefef;
+}
+
+#east{
+	background:#efefef;
+	width:200px;
+}
+#south{
+	height:35px;
+	background:#efefef;
+}

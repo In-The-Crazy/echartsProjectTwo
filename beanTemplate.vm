@@ -1,0 +1,77 @@
+package $TableBean.getPackageName() ;
+
+import java.sql.Timestamp;
+import com.huicheng.hcframe.bean.Bean;
+import com.huicheng.hcframe.utils.DataTypeUtil;
+
+
+public class $TableBean.getBeanName() extends Bean{
+	private static final long serialVersionUID = 1L;
+	public final static  String tableName="$TableBean.getTableName()";
+	public final static String[] tableColumns={$TableColumns};
+
+##存放表中各个字段的对应名称
+#foreach( ${TableFieldItem} in ${TableFieldItemList} )
+	public final static  String _$TableFieldItem.getFieldUpperCaseJavaName() = "$TableFieldItem.getFieldDBName()";
+#end
+	
+	##创建构造函数
+public $TableBean.getBeanName()(){
+		setTableName("$TableBean.getTableName()");
+		setPrimaryKeys(new String[]{$TableKeysName});
+		setClassFullName("$TableBean.getPackageName().$TableBean.getBeanName()");
+		if(getPrimaryKeys().length>1){
+			setIsSinglePrimaryKey(false);
+		}
+#foreach( ${TableFieldItem} in ${TableFieldItemList} )
+		setFieldType("$TableFieldItem.getFieldDBName()","$TableFieldItem.getFieldJavaType()");
+#end
+	}
+
+##生成各个字段的get，set方法
+#foreach( ${TableFieldItem} in ${TableFieldItemList} )
+	
+  #if( $TableFieldItem.getFieldJavaType()=="long" ) 
+	public long get$TableFieldItem.getFieldUpperCaseJavaName()() {
+		return DataTypeUtil.getAsLong(this.get(_$TableFieldItem.getFieldUpperCaseJavaName()));
+	}
+
+	public void set$TableFieldItem.getFieldUpperCaseJavaName()(long $TableFieldItem.getFieldJavaName()) {
+		this.set(_$TableFieldItem.getFieldUpperCaseJavaName(),new Long($TableFieldItem.getFieldJavaName()));
+	}
+  #elseif( $TableFieldItem.getFieldJavaType()=="short" ) 
+	public short get$TableFieldItem.getFieldUpperCaseJavaName()() {
+		return DataTypeUtil.getAsShort(this.get(_$TableFieldItem.getFieldUpperCaseJavaName()));
+	}
+
+	public void set$TableFieldItem.getFieldUpperCaseJavaName()(short $TableFieldItem.getFieldJavaName()) {
+		this.set(_$TableFieldItem.getFieldUpperCaseJavaName(),new Short($TableFieldItem.getFieldJavaName()));
+	}
+  #elseif( $TableFieldItem.getFieldJavaType()=="float" ) 
+	public float get$TableFieldItem.getFieldUpperCaseJavaName()() {
+		return DataTypeUtil.getAsFloat(this.get(_$TableFieldItem.getFieldUpperCaseJavaName()));
+	}
+
+	public void set$TableFieldItem.getFieldUpperCaseJavaName()(float $TableFieldItem.getFieldJavaName()) {
+		this.set(_$TableFieldItem.getFieldUpperCaseJavaName(),new Float($TableFieldItem.getFieldJavaName()));
+	}
+  #elseif( $TableFieldItem.getFieldJavaType()=="Timestamp" ) 
+	public Timestamp get$TableFieldItem.getFieldUpperCaseJavaName()() {
+		return DataTypeUtil.getAsDateTime(this.get(_$TableFieldItem.getFieldUpperCaseJavaName()));
+	}
+
+	public void set$TableFieldItem.getFieldUpperCaseJavaName()(Timestamp $TableFieldItem.getFieldJavaName()) {
+		this.set(_$TableFieldItem.getFieldUpperCaseJavaName(),$TableFieldItem.getFieldJavaName());
+	}
+  #else
+	public String get$TableFieldItem.getFieldUpperCaseJavaName()() {
+		return DataTypeUtil.getAsString(this.get(_$TableFieldItem.getFieldUpperCaseJavaName()));
+	}
+
+	public void set$TableFieldItem.getFieldUpperCaseJavaName()(String $TableFieldItem.getFieldJavaName()) {
+		this.set(_$TableFieldItem.getFieldUpperCaseJavaName(),$TableFieldItem.getFieldJavaName());
+	}
+  #end 
+  
+#end
+}

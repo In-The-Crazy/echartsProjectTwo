@@ -1,0 +1,82 @@
+package $SVBean.getSVImplPackageName();
+
+import java.util.HashMap;
+import java.sql.Timestamp;
+import java.util.List;
+import java.util.Map;
+import com.huicheng.hcframe.exception.AppException;
+import com.huicheng.hcframe.service.BaseService;
+import $SVBean.getBeanFullClassName().${SVBean.beanName}Bean;
+import ${SVBean.ISVPackageName}.${SVBean.ISVName};
+
+public class $SVBean.getSVImplName() extends BaseService  implements $SVBean.getISVName() { 
+
+	public void add${SVBean.beanName}(${SVBean.beanName}Bean ${SVBean.lowerCasebeanName}Bean) throws AppException {
+		if(null==${SVBean.lowerCasebeanName}Bean){
+			return;
+		}
+		/*if(null==${SVBean.lowerCasebeanName}Bean.get${SVBean.beanName}Id() 
+				||${SVBean.lowerCasebeanName}Bean.get${SVBean.beanName}Id().length()<=0)*/ {
+			${SVBean.lowerCasebeanName}Bean.set${SVBean.UpperCaseKeyName}(getNew${SVBean.UpperCaseKeyName}());
+		}
+		this.getDaoTemplate().insertBean(${SVBean.lowerCasebeanName}Bean);
+	}
+	public void add${SVBean.beanName}s(${SVBean.beanName}Bean[] ${SVBean.lowerCasebeanName}Beans) throws AppException {
+		if(null==${SVBean.lowerCasebeanName}Beans||${SVBean.lowerCasebeanName}Beans.length<=0){
+			return;
+		}
+		for(int i=0;i<${SVBean.lowerCasebeanName}Beans.length;i++){
+			/*if(null==${SVBean.lowerCasebeanName}Beans[i].get${SVBean.beanName}Id()
+					||${SVBean.lowerCasebeanName}Beans[i].get${SVBean.beanName}Id().length()<=0)*/ {
+				${SVBean.lowerCasebeanName}Beans[i].set${SVBean.UpperCaseKeyName}(getNew${SVBean.UpperCaseKeyName}());
+			}
+		}
+		this.getDaoTemplate().insertBeans(${SVBean.lowerCasebeanName}Beans);
+	}
+	public void update${SVBean.beanName}(${SVBean.beanName}Bean ${SVBean.lowerCasebeanName}Bean) throws AppException {
+		this.getDaoTemplate().updateBean(${SVBean.lowerCasebeanName}Bean);
+	}
+	public void update${SVBean.beanName}s(${SVBean.beanName}Bean[] ${SVBean.lowerCasebeanName}Beans) throws AppException {
+		this.getDaoTemplate().updateBeans(${SVBean.lowerCasebeanName}Beans);
+	}
+	public void delete${SVBean.beanName}(${SVBean.beanName}Bean ${SVBean.lowerCasebeanName}Bean) throws AppException {
+		this.getDaoTemplate().deleteBean(${SVBean.lowerCasebeanName}Bean);
+	}
+	public  void delete${SVBean.beanName}s(${SVBean.beanName}Bean[] ${SVBean.lowerCasebeanName}Beans)throws AppException{
+		this.getDaoTemplate().deleteBeans(${SVBean.lowerCasebeanName}Beans);
+	}
+	
+	
+	
+	public String getNew${SVBean.UpperCaseKeyName}() throws AppException{
+		return this.getDaoTemplate().getNewId(${SVBean.beanName}Bean.tableName)+"";
+	}
+	
+	public Timestamp getSysDate() throws AppException {
+		return this.getDaoTemplate().getSysDate();
+	}
+
+
+
+	public List<${SVBean.beanName}Bean> get${SVBean.beanName}s(String cols, String condition, Map paramMap, int startIndex, int endIndex) throws AppException {
+		return this.getDaoTemplate().getBeans(${SVBean.beanName}Bean.class, cols, condition, paramMap, startIndex, endIndex);
+	}
+
+	public int get${SVBean.beanName}sCount(String condition, Map paramMap) throws AppException {
+		return this.getDaoTemplate().getBeansCount(${SVBean.beanName}Bean.class, condition, paramMap);
+	}
+	
+	public int get${SVBean.beanName}sBySqlCount( String sql,Map paramMap)throws AppException{
+		return this.getDaoTemplate().getBeansBySqlCount( sql, paramMap);
+	}
+	public List<${SVBean.beanName}Bean> get${SVBean.beanName}sBySql( String cols,String sql,Map paramMap,int startIndex,int endIndex)throws AppException{
+		return this.getDaoTemplate().getBeansBySql(${SVBean.beanName}Bean.class, cols, sql, paramMap, startIndex, endIndex);
+	}
+	
+	public ${SVBean.beanName}Bean get${SVBean.beanName}(String ${SVBean.LowerCaseKeyName}) throws AppException {
+		String condition=${SVBean.beanName}Bean._${SVBean.UpperCaseKeyName}+"=:${SVBean.LowerCaseKeyName} ";
+		Map paramMap=new HashMap();
+		paramMap.put("${SVBean.LowerCaseKeyName}", ${SVBean.LowerCaseKeyName});
+		return (${SVBean.beanName}Bean)this.getDaoTemplate().getBean(${SVBean.beanName}Bean.class,null,condition,  paramMap);
+	}
+}
