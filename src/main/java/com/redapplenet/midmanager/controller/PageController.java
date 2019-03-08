@@ -13,8 +13,14 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/analysis")
 @Controller
 public class PageController {
+    @RequestMapping(value = "/queryFlightPriceAnalysisFuture", method = RequestMethod.GET)
+    public ModelAndView queryFlightPriceAnalysisFuture() {
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("/flightPriceAnalysisFuture");
+        return mav;
+    }
     @RequestMapping(value = "/queryFlightPriceAnalysisHistory", method = RequestMethod.GET)
-    public ModelAndView queryAnalysisFirst() {
+    public ModelAndView queryFlightPriceAnalysisHistory() {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("/flightPriceAnalysisHistory");
         return mav;
