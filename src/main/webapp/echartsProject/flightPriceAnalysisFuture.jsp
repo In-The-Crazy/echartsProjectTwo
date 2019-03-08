@@ -71,7 +71,7 @@
     </div>
         <table id="queryTable" title="远期航班运价分析" cellspacing="0"
                cellpadding="0" width="95%" iconCls="icon-edit" height="300px"></table>
-            <div id="firstChart" style="width: 90%;height: 300px;margin-top: 50px;margin-left: 50px;"></div>
+        <div id="firstChart" style="width: 95%;height: 300px;margin-top: 50px;margin-left: 50px;"></div>
 
 
 

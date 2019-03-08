@@ -113,41 +113,7 @@ function initDatebox() {
  * 加载树型
  */
 function ajaxTree() {
-    $('#schedule').combobox({
-        label : '班期：',
-        labelWidth : 100,
-        labelAlign : "right",
-        data : [{
-            "id" : "1",
-            "text" : "星期一",
-            "selected" : true
-        },{
-            "id" : "2",
-            "text" : "星期二"
-        },{
-            "id" : "3",
-            "text" : "星期三"
-        },{
-            "id" : "4",
-            "text" : "星期四"
-        },{
-            "id" : "5",
-            "text" : "星期五"
-        },{
-            "id" : "6",
-            "text" : "星期六"
-        },{
-            "id" : "7",
-            "text" : "星期日"
-        }],
-        valueField : 'id',
-        textField:'text',
-        width : 250,
-        required : true,
-        editable : false,
-        multiple : true,
-        limitToList : false
-    });
+
 }
 
 
@@ -165,6 +131,7 @@ function ajaxTableAndCharts(queryType,flag) {
     sendData.takeOffTimeStart=$('#takeOffTimeStart').datebox('getValue');
     sendData.takeOffTimeEnd=$('#takeOffTimeEnd').datebox('getValue');
     sendData.flightDate=$('#flightDate').datebox('getValue');
+    var title = "历史航班运价分析"+"("+sendData.fromCity+"-"+sendData.arriveCity+")";
 
     if(queryType==1){
         sendData.queryType = '1';
@@ -176,9 +143,9 @@ function ajaxTableAndCharts(queryType,flag) {
             $.ajax({
                 type : 'post',
                 async : false,
-                url : root + '/mainSrv/queryChartOne',
+                url : root + '/mainSrv/flightPriceHistoryChart',
                 dataType :'json',
-                data: {"fromCity":"TAO","arriveCity":"XMN","takeOffTime":"2019-03-07","intervalTime":"60","queryType":1},
+                data: sendData,
                 success : function(data) {
                     if (data != "-1") {
                         var num = 0;
@@ -196,8 +163,7 @@ function ajaxTableAndCharts(queryType,flag) {
                                     firstxArray.push(item[0]);
                                 }
                                 showData.data.push(item[2]);
-                                showData.zws.push(item[0]+'-'+item[3])
-                            }
+                                showData.zws.push(item[0]+'|'+item[3])                            }
                             firstSeriesArray.push(showData);
                             num++;
                         }
@@ -221,28 +187,31 @@ function ajaxTableAndCharts(queryType,flag) {
                 }
             ],
             title: {
-                text: '历史航班运价分析',
-                left: '15%',
+                text: title,
+                left: '45%',
             },
             tooltip: {
                 /*trigger: 'axis',*/
                 trigger: 'item',
                 formatter:function(params){//数据格式
-                    console.log(params);
                     var info =params.name+"</br>";
-                    info +="航班号："+params.seriesName+"&nbsp;&nbsp;价格："+params.value;
+                    //var flightDate ='';
+                    var zws ='';
                     for(var k=0;k<firstSeriesArray.length;k++){
                         if(params.seriesName == firstSeriesArray[k].name){
                             for(var j=0;j<firstSeriesArray[k].zws.length;j++){
-                                var item = firstSeriesArray[k].zws[j].split("-");
+                                var item = firstSeriesArray[k].zws[j].split("|");
                                 if(item[0] == params.name) {
-                                    info +="&nbsp;&nbsp;座位数："+ item[1];
+                                    //flightDate = item[2];
+                                    zws = item[1];
+                                    //info +="&nbsp;&nbsp;座位数："+ item[1];
                                 }
 
                             }
                         }
 
                     }
+                    info +="航班号："+params.seriesName+"&nbsp;&nbsp;价格："+params.value+"&nbsp;&nbsp;座位数："+ zws;
                     info+="</br>";
                     //排序显示所有信息
                     /*params.sort(compare("value"));
@@ -270,7 +239,7 @@ function ajaxTableAndCharts(queryType,flag) {
             legend: {
                 orient: 'vertical',
                 x: 'left',
-
+                y: 'middle',
                 data:firstLegendArray
             },
             grid: {

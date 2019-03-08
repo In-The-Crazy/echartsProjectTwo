@@ -114,13 +114,13 @@ function ajaxTree() {
             "id" : "6",
             "text" : "星期六"
         },{
-            "id" : "7",
+            "id" : "0",
             "text" : "星期日"
         }],
         valueField : 'id',
         textField:'text',
         width : 250,
-        required : true,
+        required : false,
         editable : false,
         multiple : true,
         limitToList : false
@@ -130,7 +130,7 @@ function ajaxTree() {
 
 /** --------加载图表数据 ------ */
 function ajaxTableAndCharts(queryType,flag) {
-    var date = getAll($('#takeOffTimeStart').datebox('getValue'),$('#takeOffTimeEnd').datebox('getValue'));
+    var date = getAll($('#takeOffTimeStart').datebox('getValue'),$('#takeOffTimeEnd').datebox('getValue'),$('#schedule').combobox('getValues').join(','));
 
     var firstChart = echarts.init(document.getElementById('firstChart'),'roma');
     var firstOption;
@@ -142,8 +142,8 @@ function ajaxTableAndCharts(queryType,flag) {
     sendData.takeOffTimeStart=$('#takeOffTimeStart').datebox('getValue');
     sendData.takeOffTimeEnd=$('#takeOffTimeEnd').datebox('getValue');
     sendData.schedule=$('#schedule').combobox('getValues').join(',');
-
-    var params = {"fromCity":"TAO","arriveCity":"XMN","takeOffTime":"2019-03-07","intervalTime":"60"};
+    var title = "远期航班运价分析"+"("+sendData.fromCity+"-"+sendData.arriveCity+")";
+    //var params = {"fromCity":"TAO","arriveCity":"XMN","takeOffTime":"2019-03-07","intervalTime":"60"};
     //var params ={"fromCity":sendData.fromCity,"arriveCity":sendData.arriveCity,"takeOffTimeStart":sendData.takeOffTimeStart,"takeOffTimeEnd":sendData.takeOffTimeEnd,"schedule":sendData.schedule,"flightNo":sendData.flightNo};
     //date =["00-00","01-00","02-00","03-00","04-00","05-00","06-00","07-00","08-00","09-00","10-00","11-00","12-00","13-00","14-00","15-00","16-00","17-00","18-00","19-00","20-00","21-00","22-00","23-00"];
     var columns = [];
@@ -168,7 +168,7 @@ function ajaxTableAndCharts(queryType,flag) {
         columnObj.field=date[i];
         columnObj.title=date[i];
         columnObj.align="center";
-        columnObj.formatter=baseNumFormater;
+        columnObj.formatter=baseFormater;
         columnObj.width=120;
         column.push(columnObj);
     }
@@ -180,7 +180,7 @@ function ajaxTableAndCharts(queryType,flag) {
         autoRowHeight : true,// 定义是否设置基于该行内容的行高度
         pageNumber : 1,
         pageSize : 10,
-        fitColumns : false,// 列自适应表格宽度
+        fitColumns : true,// 列自适应表格宽度
         striped : true,// 当true时，单元格显示条纹
         rownumbers : false,// 是否显示行号
         singleSelect : false,// 是否只能选中一条
@@ -207,11 +207,33 @@ function ajaxTableAndCharts(queryType,flag) {
                 autoRowHeight : true,// 定义是否设置基于该行内容的行高度
                 pageNumber : 1,
                 pageSize : 10,
+                fitColumns : true,// 列自适应表格宽度
+                striped : true,// 当true时，单元格显示条纹
+                rownumbers : false,// 是否显示行号
+                singleSelect : false,// 是否只能选中一条
+                queryParams : sendData,
+                nowrap:true,
+                loadMsg : '数据加载中,请稍后...',
+                onLoadError : function() {
+                    alert('数据加载失败!');
+                },
+                onLoadSuccess : function(data) {
+                    console.log(data);
+                },
+                columns : columns
+            });
+            $('#queryTable').datagrid({
+                url : root + '/mainSrv/flightPriceAnalysisFuture',
+                checkOnSelect : true,// 是否选中/取消复选框
+                pagination : true,// 是否分页
+                autoRowHeight : true,// 定义是否设置基于该行内容的行高度
+                pageNumber : 1,
+                pageSize : 10,
                 fitColumns : false,// 列自适应表格宽度
                 striped : true,// 当true时，单元格显示条纹
                 rownumbers : false,// 是否显示行号
                 singleSelect : false,// 是否只能选中一条
-                queryParams : params,
+                queryParams : sendData,
                 nowrap:true,
                 loadMsg : '数据加载中,请稍后...',
                 onLoadError : function() {
@@ -226,9 +248,9 @@ function ajaxTableAndCharts(queryType,flag) {
             $.ajax({
                 type : 'post',
                 async : false,
-                url : root + '/mainSrv/queryChartOne',
+                url : root + '/mainSrv/flightPriceFutureChart',
                 dataType :'json',
-                data: {"fromCity":"TAO","arriveCity":"XMN","takeOffTime":"2019-03-07","intervalTime":"60","queryType":1},
+                data: sendData,
                 success : function(data) {
                     if (data != "-1") {
                         var num = 0;
@@ -246,7 +268,7 @@ function ajaxTableAndCharts(queryType,flag) {
                                     firstxArray.push(item[0]);
                                 }
                                 showData.data.push(item[2]);
-                                showData.zws.push(item[0]+'-'+item[3])
+                                showData.zws.push(item[0]+'|'+item[3]+'|'+item[4])
                             }
                             firstSeriesArray.push(showData);
                             num++;
@@ -255,6 +277,7 @@ function ajaxTableAndCharts(queryType,flag) {
                 }
             });
         }
+        console.log(firstSeriesArray);
         firstOption = {
             dataZoom : [
                 {
@@ -271,27 +294,31 @@ function ajaxTableAndCharts(queryType,flag) {
                 }
             ],
             title: {
-                text: '远期航班运价分析',
-                left: '15%',
+                text: title,
+                left: '45%',
             },
             tooltip: {
                 /*trigger: 'axis',*/
                 trigger: 'item',
                 formatter:function(params){//数据格式
                     var info =params.name+"</br>";
-                    info +="航班号："+params.seriesName+"&nbsp;&nbsp;价格："+params.value;
+                    var flightDate ='';
+                    var zws ='';
                     for(var k=0;k<firstSeriesArray.length;k++){
                         if(params.seriesName == firstSeriesArray[k].name){
                             for(var j=0;j<firstSeriesArray[k].zws.length;j++){
-                                var item = firstSeriesArray[k].zws[j].split("-");
+                                var item = firstSeriesArray[k].zws[j].split("|");
                                 if(item[0] == params.name) {
-                                    info +="&nbsp;&nbsp;座位数："+ item[1];
+                                    flightDate = item[2];
+                                    zws = item[1];
+                                    //info +="&nbsp;&nbsp;座位数："+ item[1];
                                 }
 
                             }
                         }
 
                     }
+                    info +="航班号："+params.seriesName+"&nbsp;&nbsp;起飞时间："+flightDate+"&nbsp;&nbsp;价格："+params.value+"&nbsp;&nbsp;座位数："+ zws;
                     info+="</br>";
                     //排序显示所有信息
                     /*params.sort(compare("value"));
@@ -319,7 +346,7 @@ function ajaxTableAndCharts(queryType,flag) {
             legend: {
                 orient: 'vertical',
                 x: 'left',
-
+                y: 'middle',
                 data:firstLegendArray
             },
             grid: {
@@ -421,7 +448,7 @@ Date.prototype.format = function() {
     return (s); // 返回日期。		    　　
 };
 
-function getAll(begin, end) {		    	　　　　
+function getAll(begin, end ,schedule) {		    	　　　　
     var arr = [];		        　　　　
     var ab = begin.split("-");		        　　　　
     var ae = end.split("-");		        　　　　
@@ -433,8 +460,17 @@ function getAll(begin, end) {		    	　　　　
     var unixDe = de.getTime() - 24 * 60 * 60 * 1000;		        　　　　
     for (var k = unixDb; k <= unixDe;) {		            　　　　　　
         //console.log((new Date(parseInt(k))).format());		            　　　　　　
-        k = k + 24 * 60 * 60 * 1000;		            　　　　　　
-        arr.push((new Date(parseInt(k))).format());		        　　　
+        k = k + 24 * 60 * 60 * 1000;
+        var day = new Date((new Date(parseInt(k))).format()).getDay();
+        if(schedule==''){
+            arr.push((new Date(parseInt(k))).format());
+        } else {
+            var schedules = schedule.split(',').map(Number);
+            if(schedules.indexOf(day)>-1) {
+                arr.push((new Date(parseInt(k))).format());
+            }
+        }
+                　　　　　　
     }		        　　　　
     return arr;
 }

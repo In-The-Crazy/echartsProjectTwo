@@ -69,7 +69,7 @@
 
 
     </div>
-            <div id="firstChart" style="width: 90%;height: 300px;margin-top: 50px;margin-left: 50px;"></div>
+            <div id="firstChart" style="width: 95%;height: 300px;margin-top: 50px;margin-left: 50px;"></div>
 
 
 
